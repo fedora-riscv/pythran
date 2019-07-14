@@ -1,0 +1,4 @@
+/pythran-*.tar.gz
+/pythran-*/
+/results_pythran/
+*.rpm

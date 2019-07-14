@@ -3,7 +3,7 @@ Version:        0.9.2
 Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
-# pythran is MIT
+# pythran is BSD
 # pythran/pythonic/patch/complex is MIT or NCSA
 License:        BSD and (MIT or NCSA)
 

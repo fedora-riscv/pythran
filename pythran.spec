@@ -1,5 +1,5 @@
 Name:           pythran
-Version:        0.9.3
+Version:        0.9.4post1
 Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
@@ -64,7 +64,7 @@ scientific programs, and takes advantage of multi-cores and SIMD
 instruction units.
 
 %prep
-%autosetup
+%autosetup -p1
 find -name '*.hpp' -exec chmod -x {} +
 sed -i '1{/#!/d}' pythran/run.py
 
@@ -79,6 +79,9 @@ EOF
 # openblas should be faster and crunchier
 sed -i 's|blas=blas|blas=openblas|' pythran/pythran-linux*.cfg
 sed -i 's|include_dirs=|include_dirs=/usr/include/openblas|' pythran/pythran-linux*.cfg
+
+# not yet available in Fedora
+sed -i '/guzzle_sphinx_theme/d' docs/conf.py
 
 %build
 %py3_build
@@ -96,8 +99,8 @@ ln -s /usr/bin/ipython3 tmppath/ipython
 export PATH="$(pwd)/tmppath:$PATH"
 export PYTHONPATH=%{buildroot}%{python3_sitelib}
 
-# test_zig_zag_matrix_run1: https://github.com/serge-sans-paille/pythran/issues/1316
-%{__python3} -m pytest -n auto -k "not test_zig_zag_matrix_run1"
+# test_numpy_negative_binomial: https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
+%{__python3} -m pytest -n auto -k "not test_numpy_negative_binomial"
 
 %files
 %license LICENSE
@@ -107,9 +110,12 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 %{_bindir}/%{name}-config
 %{python3_sitelib}/omp/
 %{python3_sitelib}/%{name}/
-%{python3_sitelib}/%{name}-%{version}-py%{python3_version}.egg-info/
+%{python3_sitelib}/%{name}-*-py%{python3_version}.egg-info/
 
 %changelog
+* Tue Dec 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.9.4post1-1
+- Update to 0.9.4post1 (#1747029)
+
 * Tue Aug 20 2019 Miro Hrončok <mhroncok@redhat.com> - 0.9.3-1
 - Update to 0.9.3 (#1743187)
 - Allow 32bit architectures

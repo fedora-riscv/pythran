@@ -14,6 +14,11 @@ Provides:       bundled(libcxx) = 3
 URL:            https://github.com/serge-sans-paille/pythran
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
+# Pythran 0.9.4post1+ 32bit fix
+# https://github.com/serge-sans-paille/pythran/pull/1419
+Patch1:         %{url}/commit/b0501d3d6e11d00c8c839adcc2694820ecfa519e.patch
+Patch2:         %{url}/commit/2be7a91f3d2cf9a863afeb6aae5ca20c0ca2e2c3.patch
+
 # there is no actual arched content
 # yet we want to test on all architectures
 # and we also might need to skip some

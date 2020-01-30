@@ -1,6 +1,6 @@
 Name:           pythran
 Version:        0.9.4post1
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -118,6 +118,9 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 %{python3_sitelib}/%{name}-*-py%{python3_version}.egg-info/
 
 %changelog
+* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.4post1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+
 * Tue Dec 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.9.4post1-1
 - Update to 0.9.4post1 (#1747029)
 

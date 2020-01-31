@@ -1,6 +1,6 @@
 Name:           pythran
-Version:        0.9.4post1
-Release:        2%{?dist}
+Version:        0.9.5
+Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -13,11 +13,6 @@ Provides:       bundled(libcxx) = 3
 
 URL:            https://github.com/serge-sans-paille/pythran
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
-
-# Pythran 0.9.4post1+ 32bit fix
-# https://github.com/serge-sans-paille/pythran/pull/1419
-Patch1:         %{url}/commit/b0501d3d6e11d00c8c839adcc2694820ecfa519e.patch
-Patch2:         %{url}/commit/2be7a91f3d2cf9a863afeb6aae5ca20c0ca2e2c3.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -118,8 +113,8 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 %{python3_sitelib}/%{name}-*-py%{python3_version}.egg-info/
 
 %changelog
-* Thu Jan 30 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.4post1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_32_Mass_Rebuild
+* Fri Jan 31 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-1
+- Update to 0.9.5 (#1787813)
 
 * Tue Dec 03 2019 Miro Hrončok <mhroncok@redhat.com> - 0.9.4post1-1
 - Update to 0.9.4post1 (#1747029)

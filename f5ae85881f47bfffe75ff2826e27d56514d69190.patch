@@ -1,0 +1,32 @@
+From f5ae85881f47bfffe75ff2826e27d56514d69190 Mon Sep 17 00:00:00 2001
+From: serge-sans-paille <serge.guelton@telecom-bretagne.eu>
+Date: Mon, 3 Feb 2020 23:05:01 +0100
+Subject: [PATCH] Fix ipython testing
+
+Use explicit path in test.
+---
+ pythran/tests/test_ipython.py | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/pythran/tests/test_ipython.py b/pythran/tests/test_ipython.py
+index f3efd73e9..da6344731 100644
+--- a/pythran/tests/test_ipython.py
++++ b/pythran/tests/test_ipython.py
+@@ -1,10 +1,15 @@
++import os
+ import subprocess
+ from unittest import TestCase
+ 
+ class TestIpythonMagic(TestCase):
+ 
+     def test_loadext_and_run(self):
+-        subprocess.check_call(['ipython', 'ipython_script.ipy'])
++        subprocess.check_call(['ipython',
++                               os.path.join(os.path.dirname(__file__),
++                                            'ipython_script.ipy')])
+ 
+     def test_loadext_and_run_timeit_twice(self):
+-        subprocess.check_call(['ipython', 'ipython_script_timeit.ipy'])
++        subprocess.check_call(['ipython',
++                               os.path.join(os.path.dirname(__file__),
++                                            'ipython_script_timeit.ipy')])

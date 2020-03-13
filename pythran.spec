@@ -1,6 +1,6 @@
 Name:           pythran
 Version:        0.9.5
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -13,6 +13,11 @@ Provides:       bundled(libcxx) = 3
 
 URL:            https://github.com/serge-sans-paille/pythran
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+
+# Fix ipython testing
+# Backported from upstream
+# https://bugzilla.redhat.com/show_bug.cgi?id=1813075
+Patch1:         %{url}/commit/f5ae85881f47bfffe75ff2826e27d56514d69190.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -113,6 +118,9 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 %{python3_sitelib}/%{name}-*-py%{python3_version}.egg-info/
 
 %changelog
+* Fri Mar 13 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2
+- Fix tests with ipython 7.12+ (#1813075)
+
 * Fri Jan 31 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-1
 - Update to 0.9.5 (#1787813)
 

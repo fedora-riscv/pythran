@@ -23,8 +23,8 @@ Patch1:         %{url}/pull/1640.patch
 %global debug_package %{nil}
 
 BuildRequires:  boost-devel
+BuildRequires:  flexiblas-devel
 BuildRequires:  gcc-c++
-BuildRequires:  openblas-devel
 BuildRequires:  pandoc
 BuildRequires:  python3-beniget
 BuildRequires:  python3-devel
@@ -47,8 +47,8 @@ BuildRequires:  python3-wheel
 BuildRequires:  xsimd-devel
 
 # This is a package that compiles code, it runtime requires devel packages
+Requires:       flexiblas-devel
 Requires:       gcc-c++
-Requires:       openblas-devel
 Requires:       python3-devel
 Requires:       boost-devel
 Requires:       xsimd-devel
@@ -79,10 +79,10 @@ no_boost=True
 no_xsimd=True
 EOF
 
-# openblas should be faster and crunchier
+# Both OpenBLAS and FlexiBLAS are registered as "openblas" in numpy
 sed -i 's|blas=blas|blas=openblas|' pythran/pythran-linux*.cfg
-sed -i 's|libs=|libs=openblas|' pythran/pythran-linux*.cfg
-sed -i 's|include_dirs=|include_dirs=/usr/include/openblas|' pythran/pythran-linux*.cfg
+sed -i 's|libs=|libs=flexiblas|' pythran/pythran-linux*.cfg
+sed -i 's|include_dirs=|include_dirs=/usr/include/flexiblas|' pythran/pythran-linux*.cfg
 
 # not yet available in Fedora
 sed -i '/guzzle_sphinx_theme/d' docs/conf.py
@@ -121,6 +121,7 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 - Update to 0.9.7
 - Rebuilt for Python 3.9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+- https://fedoraproject.org/wiki/Changes/FlexiBLAS_as_BLAS/LAPACK_manager
 - Fixes: rhbz#1818006
 - Fixes: rhbz#1787813
 

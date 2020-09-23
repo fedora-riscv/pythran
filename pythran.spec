@@ -1,6 +1,6 @@
 Name:           pythran
-Version:        0.9.5
-Release:        4%{?dist}
+Version:        0.9.7
+Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -14,10 +14,8 @@ Provides:       bundled(libcxx) = 3
 URL:            https://github.com/serge-sans-paille/pythran
 Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
-# Fix ipython testing
-# Backported from upstream
-# https://bugzilla.redhat.com/show_bug.cgi?id=1813075
-Patch1:         %{url}/commit/f5ae85881f47bfffe75ff2826e27d56514d69190.patch
+# 32bit tests fixes (merged upstream, but not part of 0.9.7)
+Patch1:         %{url}/pull/1640.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -83,6 +81,7 @@ EOF
 
 # openblas should be faster and crunchier
 sed -i 's|blas=blas|blas=openblas|' pythran/pythran-linux*.cfg
+sed -i 's|libs=|libs=openblas|' pythran/pythran-linux*.cfg
 sed -i 's|include_dirs=|include_dirs=/usr/include/openblas|' pythran/pythran-linux*.cfg
 
 # not yet available in Fedora
@@ -118,12 +117,12 @@ export PYTHONPATH=%{buildroot}%{python3_sitelib}
 %{python3_sitelib}/%{name}-*-py%{python3_version}.egg-info/
 
 %changelog
-* Sat Aug 01 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.5-4
-- Second attempt - Rebuilt for
-  https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
-
-* Wed Jul 29 2020 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.5-3
+* Wed Sep 23 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.7-1
+- Update to 0.9.7
+- Rebuilt for Python 3.9
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_33_Mass_Rebuild
+- Fixes: rhbz#1818006
+- Fixes: rhbz#1787813
 
 * Fri Mar 13 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.5-2
 - Fix tests with ipython 7.12+ (#1813075)

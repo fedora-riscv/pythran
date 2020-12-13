@@ -1,5 +1,6 @@
 Name:           pythran
-Version:        0.9.7
+Version:        0.9.8^post3
+%global uver    0.9.8post3
 Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
@@ -14,10 +15,10 @@ Provides:       bundled(libcxx) = 3
 %py_provides    python3-%{name}
 
 URL:            https://github.com/serge-sans-paille/pythran
-Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
+Source0:        %{url}/archive/%{uver}/%{name}-%{uver}.tar.gz
 
-# 32bit tests fixes (merged upstream, but not part of 0.9.7)
-Patch1:         %{url}/pull/1640.patch
+# Make RNG adaptor compatible with libstdc++
+Patch1:         %{url}/commit/4d317755a3b908cc.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -45,8 +46,6 @@ Requires:       python3-devel
 Requires:       boost-devel
 Requires:       xsimd-devel
 
-Recommends:     python%{python3_version}dist(scipy)
-
 %description
 Pythran is an ahead of time compiler for a subset of the Python language, with
 a focus on scientific computing. It takes a Python module annotated with a few
@@ -57,7 +56,7 @@ instruction units.
 
 
 %prep
-%autosetup -p1
+%autosetup -p1 -n %{name}-%{uver}
 find -name '*.hpp' -exec chmod -x {} +
 sed -i '1{/#!/d}' pythran/run.py
 
@@ -108,6 +107,10 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Sun Dec 13 2020 sguelton@redhat.com - 0.9.8^post3-1
+- Update to 0.9.8post3
+- No longer recommend SciPy
+
 * Wed Sep 23 2020 Miro Hrončok <mhroncok@redhat.com> - 0.9.7-1
 - Update to 0.9.7
 - Rebuilt for Python 3.9

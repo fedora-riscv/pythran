@@ -25,6 +25,7 @@ Patch1:         %{url}/commit/4d317755a3b908cc.patch
 # and we also might need to skip some
 %global debug_package %{nil}
 
+BuildRequires: make
 BuildRequires:  boost-devel
 BuildRequires:  flexiblas-devel
 BuildRequires:  gcc-c++

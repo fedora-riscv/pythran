@@ -1,7 +1,7 @@
 Name:           pythran
 Version:        0.9.8^post3
 %global uver    0.9.8post3
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -19,6 +19,9 @@ Source0:        %{url}/archive/%{uver}/%{name}-%{uver}.tar.gz
 
 # Make RNG adaptor compatible with libstdc++
 Patch1:         %{url}/commit/4d317755a3b908cc.patch
+
+# Compatibility with numpy 1.20, see https://github.com/serge-sans-paille/pythran/pull/1702
+Patch2:         1702.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -39,6 +42,7 @@ BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-xdist
 BuildRequires:  /usr/bin/python
 BuildRequires:  /usr/bin/ipython
+BuildRequires:  python3-scipy
 
 # This is a package that compiles code, it runtime requires devel packages
 Requires:       flexiblas-devel
@@ -108,6 +112,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Mon Jan 18 2021 Serge Guelton - 0.9.8^post3-2
+- Apply compatibility patch with numpy 1.20
+
 * Sun Dec 13 2020 sguelton@redhat.com - 0.9.8^post3-1
 - Update to 0.9.8post3
 - No longer recommend SciPy

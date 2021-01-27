@@ -1,7 +1,7 @@
 Name:           pythran
 Version:        0.9.8^post3
 %global uver    0.9.8post3
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -112,6 +112,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.8^post3-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
+
 * Mon Jan 18 2021 Serge Guelton - 0.9.8^post3-2
 - Apply compatibility patch with numpy 1.20
 

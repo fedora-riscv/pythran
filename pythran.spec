@@ -1,7 +1,7 @@
 Name:           pythran
-Version:        0.9.8^post3
-%global uver    0.9.8post3
-Release:        3%{?dist}
+Version:        0.9.9
+%global uver    0.9.9
+Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -16,12 +16,6 @@ Provides:       bundled(libcxx) = 3
 
 URL:            https://github.com/serge-sans-paille/pythran
 Source0:        %{url}/archive/%{uver}/%{name}-%{uver}.tar.gz
-
-# Make RNG adaptor compatible with libstdc++
-Patch1:         %{url}/commit/4d317755a3b908cc.patch
-
-# Compatibility with numpy 1.20, see https://github.com/serge-sans-paille/pythran/pull/1702
-Patch2:         1702.patch
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -112,6 +106,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Wed Mar 31 2021 sguelton@redhat.com - 0.9.9-1
+- Update to 0.9.9
+
 * Wed Jan 27 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.8^post3-3
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_34_Mass_Rebuild
 

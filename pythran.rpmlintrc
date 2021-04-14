@@ -1,0 +1,8 @@
+# this is a compiler
+addFilter(r'\b(E|W):\s+devel-(file-in-non-devel-package|dependency)\b')
+
+# https://docs.fedoraproject.org/en-US/packaging-guidelines/#_do_not_use_noarch
+addFilter(r'\b(E|W):\s+no-binary\b')
+
+# sorry, not sorry
+addFilter(r'\b(E|W):\s+no-manual-page-for-binary\b')

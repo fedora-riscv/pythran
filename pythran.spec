@@ -1,7 +1,7 @@
 Name:           pythran
 Version:        0.9.11
 %global uver    0.9.11
-Release:        1%{?dist}
+Release:        2%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -106,6 +106,9 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 0.9.11-2
+- Rebuilt for Python 3.10
+
 * Sun May 23 2021 sguelton@redhat.com - 0.9.11-1
 - Update to 0.9.11
 

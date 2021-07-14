@@ -1,10 +1,10 @@
 Name:           pythran
-Version:        0.9.11
-%global uver    0.9.11
-Release:        2%{?dist}
+Version:        0.9.12
+Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
+# pythran/graph.py has bits of networkx, also BSD
 # pythran/pythonic/patch/complex is MIT or NCSA
 License:        BSD and (MIT or NCSA)
 
@@ -12,10 +12,15 @@ License:        BSD and (MIT or NCSA)
 # The version is probably somewhat around 3
 Provides:       bundled(libcxx) = 3
 
+# see pythran/graph.py
+# Only bundles one function from networkx
+Provides:       bundled(python3dist(networkx)) = 2.6.1
+
+
 %py_provides    python3-%{name}
 
 URL:            https://github.com/serge-sans-paille/pythran
-Source0:        %{url}/archive/%{uver}/%{name}-%{uver}.tar.gz
+Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 
 # there is no actual arched content
 # yet we want to test on all architectures
@@ -55,7 +60,7 @@ instruction units.
 
 
 %prep
-%autosetup -p1 -n %{name}-%{uver}
+%autosetup -p1 -n %{name}-%{version}
 find -name '*.hpp' -exec chmod -x {} +
 sed -i '1{/#!/d}' pythran/run.py
 
@@ -74,6 +79,11 @@ sed -i 's|include_dirs=|include_dirs=/usr/include/flexiblas|' pythran/pythran-li
 
 # not yet available in Fedora
 sed -i '/guzzle_sphinx_theme/d' docs/conf.py docs/requirements.txt
+
+# The tests have some cflags in them
+# We need to adapt the flags to play nicely with other Fedora's flags
+# E.g. fortify source implies at least -O1
+sed -i -e 's/-O0/-O1/g' -e 's/-Werror/-w/g' pythran/tests/__init__.py
 
 
 %generate_buildrequires
@@ -106,6 +116,11 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Wed Jul 14 2021 Miro Hrončok <mhroncok@redhat.com> - 0.9.12-1
+- Update to 0.9.12
+- Fixes: rhbz#1981981
+- Fixes: rhbz#1927172
+
 * Fri Jun 04 2021 Python Maint <python-maint@redhat.com> - 0.9.11-2
 - Rebuilt for Python 3.10
 

@@ -1,5 +1,5 @@
 Name:           pythran
-Version:        0.9.12
+Version:        0.9.12.post1
 Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
@@ -116,6 +116,10 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Wed Jul 14 2021 Miro Hrončok <mhroncok@redhat.com> - 0.9.12.post1-1
+- Update to 0.9.12.post1
+- Fixes: rhbz#1982196
+
 * Wed Jul 14 2021 Miro Hrončok <mhroncok@redhat.com> - 0.9.12-1
 - Update to 0.9.12
 - Fixes: rhbz#1981981

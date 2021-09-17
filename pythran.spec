@@ -1,6 +1,6 @@
 Name:           pythran
-Version:        0.9.12.post1
-Release:        2%{?dist}
+Version:        0.10.0
+Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -116,6 +116,10 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Fri Sep 17 2021 Miro Hrončok <mhroncok@redhat.com> - 0.10.0-1
+- Update to 0.10.0
+- Fixes: rhbz#2003905
+
 * Fri Jul 23 2021 Fedora Release Engineering <releng@fedoraproject.org> - 0.9.12.post1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_35_Mass_Rebuild
 

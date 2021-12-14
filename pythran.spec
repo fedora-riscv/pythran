@@ -1,5 +1,5 @@
 Name:           pythran
-Version:        0.10.0
+Version:        0.11.0
 Release:        1%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
@@ -34,7 +34,7 @@ BuildRequires:  gcc-c++
 BuildRequires:  pandoc
 BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-devel
-BuildRequires:  xsimd-devel
+BuildRequires:  xsimd-devel >= 8
 
 # For tests
 BuildRequires:  python3-pytest
@@ -48,7 +48,7 @@ Requires:       flexiblas-devel
 Requires:       gcc-c++
 Requires:       python3-devel
 Requires:       boost-devel
-Requires:       xsimd-devel
+Requires:       xsimd-devel >= 8
 
 %description
 Pythran is an ahead of time compiler for a subset of the Python language, with
@@ -103,8 +103,17 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %check
-# test_numpy_negative_binomial: https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
-%pytest -n auto -k "not test_numpy_negative_binomial"
+# https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
+k="not test_numpy_negative_binomial"
+%ifarch %{arm}
+# https://github.com/serge-sans-paille/pythran/pull/1946#issuecomment-992458379
+k="$k and not test_interp_6c"
+%endif
+%ifarch %{power64}
+# https://github.com/serge-sans-paille/pythran/pull/1946#issuecomment-992460026
+k="$k and not test_setup_bdist_install3"
+%endif
+%pytest -n auto -k "$k"
 
 
 %files -f %{pyproject_files}
@@ -116,6 +125,10 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %changelog
+* Tue Dec 14 2021 Miro Hrončok <mhroncok@redhat.com> - 0.11.0-1
+- Update to 0.11.0
+- Fixes: rhbz#2032254
+
 * Fri Sep 17 2021 Miro Hrončok <mhroncok@redhat.com> - 0.10.0-1
 - Update to 0.10.0
 - Fixes: rhbz#2003905

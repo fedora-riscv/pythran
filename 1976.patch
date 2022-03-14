@@ -1,0 +1,24 @@
+From 343cb724d857fe8adcef071ab088df2c02ba0d4c Mon Sep 17 00:00:00 2001
+From: Jonathan Wakely <jwakely@redhat.com>
+Date: Mon, 14 Mar 2022 10:11:00 +0000
+Subject: [PATCH] Add default constructor to string_iterator
+
+A type must be default constructible to meet the forward iterator requirements.
+GCC 12 won't compile `std::reverse_iterator<string_iterator>` without
+this change.
+---
+ pythran/pythonic/include/types/str.hpp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/pythran/pythonic/include/types/str.hpp b/pythran/pythonic/include/types/str.hpp
+index 329de1c1d..a0df45905 100644
+--- a/pythran/pythonic/include/types/str.hpp
++++ b/pythran/pythonic/include/types/str.hpp
+@@ -231,6 +231,7 @@ namespace types
+   struct string_iterator : std::iterator<std::random_access_iterator_tag, str,
+                                          std::ptrdiff_t, str *, str> {
+     std::string::const_iterator curr;
++    string_iterator() = default;
+     string_iterator(std::string::const_iterator iter) : curr(iter)
+     {
+     }

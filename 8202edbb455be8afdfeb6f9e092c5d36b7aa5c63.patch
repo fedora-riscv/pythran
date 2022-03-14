@@ -1,0 +1,32 @@
+From 8202edbb455be8afdfeb6f9e092c5d36b7aa5c63 Mon Sep 17 00:00:00 2001
+From: serge-sans-paille <serge.guelton@telecom-bretagne.eu>
+Date: Sat, 1 Jan 2022 13:17:07 +0100
+Subject: [PATCH] Rework numpy logical accumulate to match numpy update
+
+---
+ pythran/tests/test_numpy_ufunc_binary.py | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/pythran/tests/test_numpy_ufunc_binary.py b/pythran/tests/test_numpy_ufunc_binary.py
+index 139129ada..3485c0800 100644
+--- a/pythran/tests/test_numpy_ufunc_binary.py
++++ b/pythran/tests/test_numpy_ufunc_binary.py
+@@ -31,6 +31,9 @@ class TestNumpyUFuncBinary(TestEnv):
+ reduced_ufunc = {'add', 'minimum', 'maximum', 'multiply', 'bitwise_or',
+                  'bitwise_and', 'bitwise_xor'}
+ 
++cmp_ufunc = ('equal', 'greater_equal', 'less_equal', 'not_equal', 'greater',
++             'less')
++
+ for ns, f in binary_ufunc:
+     if 'bitwise_' in f or 'ldexp' in f or '_shift' in f :
+         setattr(TestNumpyUFuncBinary, 'test_' + f, eval("lambda self: self.run_test('def np_{0}(a): from {1} import {0} ; return {0}(a,a)', numpy.ones(10, numpy.int32), np_{0}=[NDArray[numpy.int32,:]])".format(f, ns)))
+@@ -78,7 +81,7 @@ class TestNumpyUFuncBinary(TestEnv):
+                 pass
+ 
+         ## Tests for accumulation
+-        if 'scipy' not in ns:
++        if 'scipy' not in ns and f not in cmp_ufunc:
+             setattr(TestNumpyUFuncBinary, 'test_accumulate_' + f, eval("lambda self: self.run_test('def np_{0}_accumulate(a): from {1} import {0} ; return {0}.accumulate(a)', numpy.ones(10), np_{0}_accumulate=[NDArray[float,:]])".format(f, ns)))
+             setattr(TestNumpyUFuncBinary, 'test_accumulate_' + f + '_matrix', eval("lambda self: self.run_test('def np_{0}_matrix_accumulate(a): from {1} import {0} ; return {0}.accumulate(a)', numpy.ones((2,5)) - 0.2 , np_{0}_matrix_accumulate=[NDArray[float, :, :]])".format(f, ns)))
+         ## Tests for reduction

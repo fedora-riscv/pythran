@@ -1,6 +1,6 @@
 Name:           pythran
 Version:        0.11.0
-Release:        3%{?dist}
+Release:        4%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -109,6 +109,11 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %check
+# some tests from test_distutils.py fail with distutils from setuptools 60+,
+# reported at https://github.com/serge-sans-paille/pythran/issues/1981
+# use the standard library for now:
+export SETUPTOOLS_USE_DISTUTILS=stdlib
+
 # https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
 k="not test_numpy_negative_binomial"
 %ifarch %{arm}
@@ -131,6 +136,10 @@ k="$k and not test_setup_bdist_install3"
 
 
 %changelog
+* Tue Mar 15 2022 Miro Hrončok <mhroncok@redhat.com> - 0.11.0-4
+- Add a workaround for setuptools 60+,
+  use distutils from the standard library during the tests
+
 * Mon Mar 14 2022 Serge Guelton - 0.11.0-3
 - Fix gcc12 build
 - Fixes: rhbz#2046923

@@ -56,6 +56,10 @@ Patch:          https://github.com/serge-sans-paille/pythran/pull/1979.patch
 Patch:          https://github.com/serge-sans-paille/pythran/commit/a0571440f5ba08ab3bbfb8aa01831904dfd96815.patch
 Patch:          https://github.com/serge-sans-paille/pythran/commit/8202edbb455be8afdfeb6f9e092c5d36b7aa5c63.patch
 
+# Upstream fixes for Python 3.11
+Patch:          https://github.com/serge-sans-paille/pythran/pull/1996.patch
+Patch:          https://github.com/serge-sans-paille/pythran/pull/1997.patch
+
 %description
 Pythran is an ahead of time compiler for a subset of the Python language, with
 a focus on scientific computing. It takes a Python module annotated with a few

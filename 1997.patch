@@ -1,0 +1,39 @@
+From 821238d492a208c148f802dfd18bf1089dea9f22 Mon Sep 17 00:00:00 2001
+From: serge-sans-paille <serge.guelton@telecom-bretagne.eu>
+Date: Wed, 8 Jun 2022 18:14:17 +0200
+Subject: [PATCH] Since python 3.11, random.shuffle takes a single argument
+
+see deprecation notice in https://docs.python.org/3/library/random.html#random.shuffle
+Fix #1995
+---
+ pythran/tests/test_random.py | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/pythran/tests/test_random.py b/pythran/tests/test_random.py
+index 209ca5b6f1..7c60593727 100644
+--- a/pythran/tests/test_random.py
++++ b/pythran/tests/test_random.py
+@@ -1,5 +1,7 @@
+ """ Check the random module behavior. """
+ from pythran.tests import TestEnv
++from unittest import skipIf
++import sys
+ 
+ 
+ @TestEnv.module
+@@ -109,6 +111,7 @@ def shuffle1(n):
+             return r != list(range(n)) and sorted(r) == list(range(n))""",
+                       10, shuffle1=[int])
+ 
++    @skipIf(sys.version_info >= (3, 11), "no shuffler option since 3.11")
+     def test_shuffle2(self):
+         """ Check shuffling with custom function. """
+         self.run_test("""
+@@ -119,6 +122,7 @@ def shuffle2(n):
+             return r != list(range(n)) and sorted(r) == list(range(n))""",
+                       10 ** 4, shuffle2=[int])
+ 
++    @skipIf(sys.version_info >= (3, 11), "no shuffler option since 3.11")
+     def test_shuffle3(self):
+         """ Check shuffling with random function. """
+         self.run_test("""

@@ -1,0 +1,24 @@
+From 7c623444ce7fa3679038b173236a716d100bb92b Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Miro=20Hron=C4=8Dok?= <miro@hroncok.cz>
+Date: Mon, 6 Jun 2022 13:25:14 +0200
+Subject: [PATCH] Don't use removed sysconfig.get_config_vars()["SO"] in a
+ doctest
+
+This was removed from Python 3.11+, see https://github.com/python/cpython/issues/91670
+---
+ pythran/toolchain.py | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/pythran/toolchain.py b/pythran/toolchain.py
+index 5a9523903..bb0404466 100644
+--- a/pythran/toolchain.py
++++ b/pythran/toolchain.py
+@@ -451,7 +451,7 @@ def compile_pythranfile(file_path, output_file=None, module_name=None,
+     Specify the output file:
+ 
+     >>> import sysconfig
+-    >>> ext = sysconfig.get_config_vars()["SO"]
++    >>> ext = sysconfig.get_config_vars()["EXT_SUFFIX"]
+     >>> so_path = compile_pythranfile('pythran_test.py', output_file='foo'+ext)
+     """
+     if not output_file:

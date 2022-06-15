@@ -1,6 +1,6 @@
 Name:           pythran
 Version:        0.11.0
-Release:        4%{?dist}
+Release:        5%{?dist}
 Summary:        Ahead of Time Python compiler for numeric kernels
 
 # pythran is BSD
@@ -140,6 +140,9 @@ k="$k and not test_setup_bdist_install3"
 
 
 %changelog
+* Wed Jun 15 2022 Python Maint <python-maint@redhat.com> - 0.11.0-5
+- Rebuilt for Python 3.11
+
 * Tue Mar 15 2022 Miro Hrončok <mhroncok@redhat.com> - 0.11.0-4
 - Add a workaround for setuptools 60+,
   use distutils from the standard library during the tests

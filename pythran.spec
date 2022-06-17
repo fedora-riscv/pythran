@@ -124,6 +124,10 @@ k="not test_numpy_negative_binomial"
 # https://github.com/serge-sans-paille/pythran/pull/1946#issuecomment-992458379
 k="$k and not test_interp_6c"
 %endif
+%ifarch aarch64
+# the test is so flaky it makes the build fail almost all the time
+k="$k and not test_interp_8"
+%endif
 %ifarch %{power64}
 # https://github.com/serge-sans-paille/pythran/pull/1946#issuecomment-992460026
 k="$k and not test_setup_bdist_install3"

@@ -1,3 +1,5 @@
+%bcond_without bootstrap
+
 Name:           pythran
 Version:        0.11.0
 Release:        6%{?dist}
@@ -36,12 +38,14 @@ BuildRequires:  pyproject-rpm-macros
 BuildRequires:  python3-devel
 BuildRequires:  xsimd-devel >= 8
 
+%if %{without bootstrap}
 # For tests
 BuildRequires:  python3-pytest
 BuildRequires:  python3-pytest-xdist
 BuildRequires:  /usr/bin/python
 BuildRequires:  /usr/bin/ipython
 BuildRequires:  python3-scipy
+%endif
 
 # This is a package that compiles code, it runtime requires devel packages
 Requires:       flexiblas-devel
@@ -112,6 +116,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %pyproject_save_files %{name} omp
 
 
+%if %{without bootstrap}
 %check
 # some tests from test_distutils.py fail with distutils from setuptools 60+,
 # reported at https://github.com/serge-sans-paille/pythran/issues/1981
@@ -133,6 +138,7 @@ k="$k and not test_interp_8"
 k="$k and not test_setup_bdist_install3"
 %endif
 %pytest -n auto -k "$k"
+%endif
 
 
 %files -f %{pyproject_files}
@@ -144,6 +150,9 @@ k="$k and not test_setup_bdist_install3"
 
 
 %changelog
+* Wed Apr 2 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 0.11.0-6~bootstrap
+- Bootstrap for Fedora riscv64.
+
 * Fri Jul 22 2022 Fedora Release Engineering <releng@fedoraproject.org> - 0.11.0-6
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_37_Mass_Rebuild
 

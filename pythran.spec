@@ -120,11 +120,6 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 
 
 %check
-# some tests from test_distutils.py fail with distutils from setuptools 60+,
-# reported at https://github.com/serge-sans-paille/pythran/issues/1981
-# use the standard library for now:
-export SETUPTOOLS_USE_DISTUTILS=stdlib
-
 # https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
 k="not test_numpy_negative_binomial"
 %ifarch %{arm}

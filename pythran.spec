@@ -25,6 +25,10 @@ Source0:        %{url}/archive/%{version}/%{name}-%{version}.tar.gz
 # assertEquals was removed from unittest in Python 3.12
 Patch:          https://github.com/serge-sans-paille/pythran/pull/2119.patch
 
+# Introduce pythran/pythonic/include/types/longdouble.hpp et cie
+# New numpy version alias np.float128 to np.longdouble, so we need these headers too.
+Patch:          https://github.com/serge-sans-paille/pythran/pull/2120.patch
+
 # there is no actual arched content
 # yet we want to test on all architectures
 # and we also might need to skip some

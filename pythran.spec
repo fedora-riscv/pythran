@@ -29,6 +29,10 @@ Patch:          https://github.com/serge-sans-paille/pythran/pull/2119.patch
 # New numpy version alias np.float128 to np.longdouble, so we need these headers too.
 Patch:          https://github.com/serge-sans-paille/pythran/pull/2120.patch
 
+# Use pythran logger instead of default logger to report absence of spec
+# Fixes build with setuptools distutils
+Patch:          https://github.com/serge-sans-paille/pythran/pull/2122.patch
+
 # there is no actual arched content
 # yet we want to test on all architectures
 # and we also might need to skip some

@@ -1,3 +1,5 @@
+%bcond_without bootstrap
+
 Name:           pythran
 Version:        0.13.1
 Release:        2%{?dist}
@@ -53,10 +55,12 @@ BuildRequires:  xsimd-devel >= 8
 BuildRequires:  pandoc
 %endif
 
+%if %{without bootstrap}
 # For tests
 BuildRequires:  python3-pytest
 BuildRequires:  /usr/bin/python
 BuildRequires:  python3-scipy
+%endif
 
 # these packages are not included in RHEL
 %if %{undefined rhel}
@@ -127,6 +131,7 @@ rm -rf docs/_build/html/.{doctrees,buildinfo}
 %pyproject_save_files %{name} omp
 
 
+%if %{without bootstrap}
 %check
 # https://bugzilla.redhat.com/show_bug.cgi?id=1747029#c12
 k="not test_numpy_negative_binomial"
@@ -148,7 +153,6 @@ k="$k and not test_loadext_and_run"
 %endif
 %pytest %{?!rhel:-n auto} -k "$k"
 
-
 %files -f %{pyproject_files}
 %license LICENSE
 %doc README.rst
@@ -168,6 +172,9 @@ k="$k and not test_loadext_and_run"
 
 * Mon Jul 03 2023 Python Maint <python-maint@redhat.com> - 0.12.1-4
 - Rebuilt for Python 3.12
+
+* Wed Apr 2 2023 Liu Yang <Yang.Liu.sn@gmail.com> - 0.11.0-6~bootstrap
+- Bootstrap for Fedora riscv64.
 
 * Wed Jan 25 2023 Yaakov Selkowitz <yselkowi@redhat.com> - 0.12.1-3
 - Avoid ipython test dependency in RHEL builds

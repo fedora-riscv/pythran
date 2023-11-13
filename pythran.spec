@@ -152,6 +152,7 @@ k="$k and not test_setup_bdist_install3"
 k="$k and not test_loadext_and_run"
 %endif
 %pytest %{?!rhel:-n auto} -k "$k"
+%endif
 
 %files -f %{pyproject_files}
 %license LICENSE
